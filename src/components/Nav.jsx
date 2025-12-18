@@ -15,7 +15,7 @@ const Nav = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               <NavLink
-                to="/"
+                to="/profile"
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-lg text-lg font-medium transition-colors ${
                     isActive
@@ -24,11 +24,11 @@ const Nav = () => {
                   }`
                 }
               >
-                Bosh sahifa
+                Profile
               </NavLink>
 
               <NavLink
-                to="/lab"
+                to="/"
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-lg text-lg font-medium transition-colors ${
                     isActive
@@ -41,7 +41,7 @@ const Nav = () => {
               </NavLink>
 
               <NavLink
-                to="/profile"
+                to="/book"
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-lg text-lg font-medium transition-colors ${
                     isActive
@@ -50,7 +50,7 @@ const Nav = () => {
                   }`
                 }
               >
-                Profil
+                Kitoblar
               </NavLink>
 
               <NavLink

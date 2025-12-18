@@ -1,39 +1,25 @@
 import { create } from "zustand";
-import { authAPI } from "../api/auth";
+import { persist } from "zustand/middleware";
 
-const authStore = create((set) => ({
-  user: null,
-  token: localStorage.getItem("token"),
-  loading: false,
+const authStore = create(
+  persist(
+    (set) => ({
+      access: null,
+      refresh: null,
+      isAuth: false,
 
-  login: async (data) => {
-    set({ loading: true });
-    try {
-      const res = await authAPI.login(data);
+      login: (access, refresh) => {
+        localStorage.setItem("token", access);
+        set({ access, refresh, isAuth: true });
+      },
 
-      localStorage.setItem("token", res.data.access);
-
-      set({ token: res.data.access });
-
-      await authStore.getState().getProfile();
-    } finally {
-      set({ loading: false });
-    }
-  },
-
-  getProfile: async () => {
-    const res = await authAPI.getProfile();
-    set({ user: res.data });
-  },
-
-  logout: async () => {
-    try {
-      await authAPI.logout();
-    } catch (e) {}
-
-    localStorage.removeItem("token");
-    set({ user: null, token: null });
-  },
-}));
+      logout: () => {
+        localStorage.removeItem("token");
+        set({ access: null, refresh: null, isAuth: false });
+      },
+    }),
+    { name: "auth-store" }
+  )
+);
 
 export default authStore;
